@@ -1,6 +1,7 @@
 package com.example.cidseuser.myapplication;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +26,23 @@ public class MainActivity extends AppCompatActivity {
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 0)
+        {
+            if(data != null)
+            {
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                photo = Bitmap.createScaledBitmap(photo, 80, 80, false);
+                imageView.setImageBitmap(photo);
+            }
+            else{
+            }
+        }
+    }
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
